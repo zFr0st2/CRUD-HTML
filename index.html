@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Tiendita</title>
+    <link rel="stylesheet" href="./style/estilos.css">
 </head>
 <body>
     <h1>Panel de tu tienda</h1>
@@ -38,12 +39,38 @@
             <input type="number" id="precio" name="precio" required><br>
 
             <label for="categoria">Categoría:</label>
-            <input type="text" id="categoria" name="categoria" required><br>
+            <select id="categoria" name="categoria" required>
+                <option value="Deportes">Deportes</option>
+                <option value="Electronica">Electrónica</option>
+                <option value="Hogar">Hogar</option>
+            </select><br>
 
             <button type="submit" id="guardar">Guardar</button>
         </form>
     </div>
+    <div id="formularioEdicion" style="display:none;">
+        <h2>Editar Producto</h2>
+        <form id="editFormulario">
+            <label for="editProducto">Producto:</label>
+            <input type="text" id="editProducto" name="editProducto" required><br>
 
+            <label for="editDescripcion">Descripción:</label>
+            <textarea id="editDescripcion" name="editDescripcion" required></textarea><br>
+
+            <label for="editPrecio">Precio:</label>
+            <input type="number" id="editPrecio" name="editPrecio" required><br>
+
+            <label for="editCategoria">Categoría:</label>
+            <select id="editCategoria" name="editCategoria" required>
+                <option value="Deportes">Deportes</option>
+                <option value="Electronica">Electrónica</option>
+                <option value="Hogar">Hogar</option>
+            </select><br>
+            <button type="button" id="guardarEdicion">Guardar Edición</button>
+
+        </form>
+    </div>
+</div>
     <script src="./script/index.js"></script>
 </body>
 </html>
