@@ -73,67 +73,65 @@ fetch('http://localhost:3000/productos')
     })
     .catch(error => console.error('Error:', error));
 
-    function editarProducto(index) {
-        const fila = document.querySelector(`tr[data-id="${index}"]`);
-    
-        if (fila) {
-            document.getElementById('editProducto').value = fila.cells[0].textContent;
-            document.getElementById('editDescripcion').value = fila.cells[1].textContent;
-            document.getElementById('editPrecio').value = fila.cells[2].textContent;
-            document.getElementById('editCategoria').value = fila.cells[3].textContent;
-    
-            document.getElementById('formularioEdicion').style.display = 'block';
-    
-            // Agregamos el índice como atributo data-id al botón de guardar para que pueda ser recuperado más tarde
-            const guardarBtn = document.getElementById('guardarEdicion');
-            guardarBtn.setAttribute('data-id', index);
-        } else {
-            console.error(`No se encontró la fila con data-id=${index}`);
-        }
-    }
+function editarProducto(index) {
+    const fila = document.querySelector(`tr[data-id="${index}"]`);
 
-    function guardarEdicion() {
-        let editProducto = document.getElementById('editProducto').value;
-        let editDescripcion = document.getElementById('editDescripcion').value;
-        let editPrecio = document.getElementById('editPrecio').value;
-        let editCategoria = document.getElementById('editCategoria').value;
-    
-        let indexButton = document.getElementById('guardarEdicion');
-    
-        if (indexButton && !isNaN(parseInt(indexButton.getAttribute('data-id')))) {
-            let index = parseInt(indexButton.getAttribute('data-id'));
-    
-            let productoActualizado = {
-                producto: editProducto,
-                descripcion: editDescripcion,
-                precio: editPrecio,
-                categoria: editCategoria
-            };
-    
-            fetch(`http://localhost:3000/editar/${index}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(productoActualizado)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Producto actualizado:', data);
-    
-                actualizarFilaEnTabla(index, productoActualizado);
-    
-                document.getElementById('formularioEdicion').style.display = 'none';
-            })
-            .catch(error => console.error('Error al actualizar producto:', error));
-        } else {
-            console.error('El atributo data-id no está presente o no es un número válido.');
-        }
-    }
-    
-    document.getElementById('guardarEdicion').addEventListener('click', guardarEdicion);
+    if (fila) {
+        document.getElementById('editProducto').value = fila.cells[0].textContent;
+        document.getElementById('editDescripcion').value = fila.cells[1].textContent;
+        document.getElementById('editPrecio').value = fila.cells[2].textContent;
+        document.getElementById('editCategoria').value = fila.cells[3].textContent;
 
-// Nueva función para actualizar la fila en la tabla
+        document.getElementById('formularioEdicion').style.display = 'block';
+
+        const guardarBtn = document.getElementById('guardarEdicion');
+        guardarBtn.setAttribute('data-id', index);
+    } else {
+        console.error(`No se encontró la fila con data-id=${index}`);
+    }
+}
+
+function guardarEdicion() {
+    let editProducto = document.getElementById('editProducto').value;
+    let editDescripcion = document.getElementById('editDescripcion').value;
+    let editPrecio = document.getElementById('editPrecio').value;
+    let editCategoria = document.getElementById('editCategoria').value;
+
+    let indexButton = document.getElementById('guardarEdicion');
+
+    if (indexButton && !isNaN(parseInt(indexButton.getAttribute('data-id')))) {
+        let index = parseInt(indexButton.getAttribute('data-id'));
+
+        let productoActualizado = {
+            producto: editProducto,
+            descripcion: editDescripcion,
+            precio: editPrecio,
+            categoria: editCategoria
+        };
+
+        fetch(`http://localhost:3000/editar/${index}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productoActualizado)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Producto actualizado:', data);
+
+            actualizarFilaEnTabla(index, productoActualizado);
+
+            document.getElementById('formularioEdicion').style.display = 'none';
+        })
+        .catch(error => console.error('Error al actualizar producto:', error));
+    } else {
+        console.error('El atributo data-id no está presente o no es un número válido.');
+    }
+}
+
+document.getElementById('guardarEdicion').addEventListener('click', guardarEdicion);
+
 function actualizarFilaEnTabla(index, productoActualizado) {
     const fila = document.querySelector(`tr[data-id="${index}"]`);
 
